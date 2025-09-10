@@ -1,0 +1,33 @@
+.login-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.modern-input-group {
+  transition: all 0.3s ease;
+}
+
+.modern-input {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  transition: 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modern-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+}
+
+.modern-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.modern-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}

@@ -1,0 +1,329 @@
+<!-- account.component.html -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh;">
+  <div class="container">
+    
+    @if(token != null) {
+      <!-- Welcome Header -->
+      <div class="text-center mb-5">
+        <div class="welcome-header p-4 rounded-4 d-inline-block"
+             style="background: rgba(255, 255, 255, 0.9); 
+                    backdrop-filter: blur(20px); 
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+          <h1 class="mb-3 fw-bold" 
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                     -webkit-background-clip: text; 
+                     -webkit-text-fill-color: transparent; 
+                     background-clip: text;">
+            Welcome back, {{token.username}}!
+          </h1>
+          <p class="mb-0 text-muted fs-5">Manage your account and track your orders</p>
+        </div>
+        <br>
+        <br>
+
+      <!-- User Profile Card -->
+      <div class="mb-4">
+        <div class="card border-0 rounded-4 shadow-lg" 
+             style="background: rgba(255, 255, 255, 0.9); 
+                    backdrop-filter: blur(20px); 
+                    border: 1px solid rgba(255, 255, 255, 0.3);">
+          <div class="card-body p-4">
+            <div class="row align-items-center">
+              <div class="col-lg-3 text-center mb-4 mb-lg-0">
+                <div class="avatar-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                     style="width: 120px; 
+                            height: 120px; 
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                            border-radius: 50%; 
+                            color: white; 
+                            font-size: 3rem; 
+                            font-weight: bold;
+                            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);">
+                  {{token.username.charAt(0).toUpperCase()}}
+                </div>
+                <h4 class="mb-2 fw-bold" style="color: #2d3436;">{{token.username}}</h4>
+                <span class="badge rounded-pill px-3 py-2" 
+                      style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); 
+                             color: white; 
+                             font-size: 0.9rem;">
+                  {{token.role}}
+                </span>
+              </div>
+
+              @if(userAccount) {
+                <div class="col-lg-9">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="detail-item p-3 rounded-3 h-100" 
+                           style="background: rgba(102, 126, 234, 0.05); 
+                                  border-left: 4px solid #667eea;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="font-size: 1.2rem; margin-right: 8px;">📧</span>
+                          <small class="text-muted fw-semibold">Email</small>
+                        </div>
+                        <span class="fw-bold" style="color: #2d3436;">{{userAccount.email}}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="detail-item p-3 rounded-3 h-100" 
+                           style="background: rgba(102, 126, 234, 0.05); 
+                                  border-left: 4px solid #667eea;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="font-size: 1.2rem; margin-right: 8px;">📱</span>
+                          <small class="text-muted fw-semibold">Phone</small>
+                        </div>
+                        <span class="fw-bold" style="color: #2d3436;">{{userAccount.phone}}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="detail-item p-3 rounded-3 h-100" 
+                           style="background: rgba(102, 126, 234, 0.05); 
+                                  border-left: 4px solid #667eea;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="font-size: 1.2rem; margin-right: 8px;">📍</span>
+                          <small class="text-muted fw-semibold">Address</small>
+                        </div>
+                        <span class="fw-bold" style="color: #2d3436;">
+                          {{userAccount.address.street}}, {{userAccount.address.city}}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="detail-item p-3 rounded-3 h-100" 
+                           style="background: rgba(102, 126, 234, 0.05); 
+                                  border-left: 4px solid #667eea;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="font-size: 1.2rem; margin-right: 8px;">✅</span>
+                          <small class="text-muted fw-semibold">Status</small>
+                        </div>
+                        <span class="badge rounded-pill" 
+                              [style]="userAccount.is_confirmed ? 
+                                       'background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); color: white;' : 
+                                       'background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); color: white;'">
+                          {{userAccount.is_confirmed ? 'Verified' : 'Unverified'}}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="detail-item p-3 rounded-3 h-100" 
+                           style="background: rgba(102, 126, 234, 0.05); 
+                                  border-left: 4px solid #667eea;">
+                        <div class="d-flex align-items-center mb-1">
+                          <span style="font-size: 1.2rem; margin-right: 8px;">📅</span>
+                          <small class="text-muted fw-semibold">Member Since</small>
+                        </div>
+                        <span class="fw-bold" style="color: #2d3436;">
+                          {{userAccount.createdAt | date:'MMM dd, yyyy'}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Section -->
+      <div>
+          <div class="card border-0 rounded-4 shadow-lg h-100" 
+               style="background: rgba(255, 255, 255, 0.9); 
+                      backdrop-filter: blur(20px); 
+                      border: 1px solid rgba(255, 255, 255, 0.3);">
+            <div class="card-header border-0 p-4" 
+                 style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); 
+                        border-radius: 1rem 1rem 0 0;">
+              <div class="d-flex align-items-center justify-content-between">
+                <h3 class="mb-0 fw-bold d-flex align-items-center" style="color: #2d3436;">
+                  <span style="font-size: 1.5rem; margin-right: 12px;">🛍️</span>
+                  Your Orders
+                </h3>
+                <span class="badge rounded-pill px-3 py-2" 
+                      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                             color: white; 
+                             font-size: 0.9rem;">
+                  {{orders.length}} Orders
+                </span>
+              </div>
+            </div>
+            
+            <div class="card-body p-4">
+              @if(orders.length > 0) {
+                <div class="orders-list">
+                  @for(order of orders.slice().reverse(); track order._id) {
+                    <div class="order-card mb-4 p-4 rounded-3 border" 
+                         style="background: rgba(248, 249, 255, 0.8); 
+                                border-color: rgba(102, 126, 234, 0.2) !important;
+                                transition: all 0.3s ease;"
+                         onmouseover="this.style.background='rgba(102, 126, 234, 0.08)'; 
+                                     this.style.transform='translateY(-2px)'; 
+                                     this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.15)'"
+                         onmouseout="this.style.background='rgba(248, 249, 255, 0.8)'; 
+                                    this.style.transform='translateY(0)'; 
+                                    this.style.boxShadow='none'">
+                      
+                      <!-- Order Header -->
+                      <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                          <h5 class="mb-1 fw-bold" style="color: #2d3436;">
+                            Order #{{order._id.slice(-8).toUpperCase()}}
+                          </h5>
+                          <small class="text-muted">{{order.created_at | date:'MMM dd, yyyy - HH:mm'}}</small>
+                        </div>
+                        <div class="text-end">
+                          <div class="h4 mb-1 fw-bold" 
+                               style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                      -webkit-background-clip: text; 
+                                      -webkit-text-fill-color: transparent; 
+                                      background-clip: text;">
+                            ${{order.total_price.toFixed(2)}}
+                          </div>
+                          <span class="badge rounded-pill" 
+                                [style]="order.payment_status === 'paid' ? 
+                                         'background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); color: white;' : 
+                                         order.payment_status === 'pending' ? 
+                                         'background: linear-gradient(135deg, #fdcb6e 0%, #f39c12 100%); color: white;' :
+                                         'background: linear-gradient(135deg, #e17055 0%, #d63031 100%); color: white;'">
+                            {{order.payment_status}}
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- Shipping Address -->
+                      <div class="shipping-info mb-3 p-3 rounded-3" 
+                           style="background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(102, 126, 234, 0.1);">
+                        <div class="d-flex align-items-center mb-2">
+                          <span style="font-size: 1.1rem; margin-right: 8px;">🚚</span>
+                          <small class="text-muted fw-semibold">Shipping Address</small>
+                        </div>
+                        <span class="fw-semibold" style="color: #2d3436;">
+                          {{order.shipping_address.street}}, {{order.shipping_address.city}}
+                        </span>
+                      </div>
+
+                      <!-- Order Items -->
+                      <div class="order-items">
+                        <div class="d-flex align-items-center mb-3">
+                          <span style="font-size: 1.1rem; margin-right: 8px;">📦</span>
+                          <small class="text-muted fw-semibold">Items ({{order.items.length}})</small>
+                        </div>
+                        <div class="row g-2">
+                          @for(item of order.items; track item.product_id) {
+                            <div class="col-md-6">
+                              <div class="item-card p-3 rounded-3 d-flex align-items-center gap-3" 
+                                   style="background: rgba(255, 255, 255, 0.9); 
+                                          border: 1px solid rgba(102, 126, 234, 0.1);">
+                                <div class="item-avatar d-flex align-items-center justify-content-center"
+                                     style="width: 50px; 
+                                            height: 50px; 
+                                            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); 
+                                            border-radius: 12px; 
+                                            color: white; 
+                                            font-weight: bold;">
+                                  {{item.product_id.name.charAt(0).toUpperCase()}}
+                                </div>
+                                <div class="flex-grow-1">
+                                  <h6 class="mb-1 fw-bold" style="color: #2d3436;">{{item.product_id.name}}</h6>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Qty: {{item.quantity}}</span>
+                                    <span class="fw-bold" style="color: #667eea;">${{item.product_id.price.toFixed(2)}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="empty-state text-center py-5">
+                  <div class="empty-icon mb-4" 
+                       style="font-size: 4rem; 
+                              background: linear-gradient(135deg, #ddd6fe 0%, #e0e7ff 100%); 
+                              -webkit-background-clip: text; 
+                              -webkit-text-fill-color: transparent; 
+                              background-clip: text;">
+                    🛒
+                  </div>
+                  <h4 class="mb-3 fw-bold" style="color: #636e72;">No Orders Yet</h4>
+                  <p class="text-muted mb-4">Start shopping to see your orders here!</p>
+                  <button class="btn fw-semibold rounded-pill px-4 py-2" 
+                          routerLink="/products"
+                          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                 border: none; 
+                                 color: white; 
+                                 transition: all 0.3s ease;"
+                          onmouseover="this.style.background='linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)'; 
+                                      this.style.transform='translateY(-2px)'; 
+                                      this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.4)'"
+                          onmouseout="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; 
+                                     this.style.transform='translateY(0)'; 
+                                     this.style.boxShadow='none'">
+                    Start Shopping
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+    } @else {
+      <!-- Not Logged In State -->
+      <div class="text-center py-5">
+        <div class="auth-required p-5 rounded-4 d-inline-block"
+             style="background: rgba(255, 255, 255, 0.9); 
+                    backdrop-filter: blur(20px); 
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+          <div class="auth-icon mb-4" 
+               style="font-size: 4rem; 
+                      background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%); 
+                      -webkit-background-clip: text; 
+                      -webkit-text-fill-color: transparent; 
+                      background-clip: text;">
+            🔐
+          </div>
+          <h2 class="mb-3 fw-bold" style="color: #2d3436;">Access Required</h2>
+          <p class="text-muted mb-4 fs-5">Please log in to view your account information</p>
+          <div class="d-flex gap-3 justify-content-center">
+            <button class="btn fw-semibold rounded-pill px-4" 
+                    routerLink="/login"
+                    style="background: rgba(102, 126, 234, 0.1); 
+                           border: 1px solid #667eea; 
+                           color: #667eea; 
+                           transition: all 0.3s ease;"
+                    onmouseover="this.style.background='rgba(102, 126, 234, 0.2)'; 
+                                this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.background='rgba(102, 126, 234, 0.1)'; 
+                               this.style.transform='translateY(0)'">
+              Login
+            </button>
+            <button class="btn fw-semibold rounded-pill px-4" 
+                    routerLink="/register"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                           border: none; 
+                           color: white; 
+                           transition: all 0.3s ease;"
+                    onmouseover="this.style.background='linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)'; 
+                                this.style.transform='translateY(-2px)'; 
+                                this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.4)'"
+                    onmouseout="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; 
+                               this.style.transform='translateY(0)'; 
+                               this.style.boxShadow='none'">
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

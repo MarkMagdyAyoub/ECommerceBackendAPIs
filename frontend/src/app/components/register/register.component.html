@@ -1,0 +1,190 @@
+<section id="register" class="py-5">
+  <div class="container position-relative">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-lg p-5 rounded-4 register-card position-relative overflow-hidden"
+              style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2);">
+
+          <!-- Gradient overlay -->
+          <div class="position-absolute top-0 start-0 w-100 h-100 rounded-4"
+                style="background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05)); pointer-events: none;"></div>
+
+          <div class="position-relative">
+            <h2 class="text-center fw-bold mb-3" style="color: #2d3436;">Create Account</h2>
+            <p class="text-center text-muted mb-4">Join Quick Cart and start shopping smarter</p>
+            <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm(registerForm)">
+
+              <!-- Username -->
+              <div class="input-group mb-3 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-person-fill text-primary"></i>
+                </span>
+                <input type="text" formControlName="username" class="form-control border-start-0 modern-input"
+                        placeholder="Username">
+              </div>
+              @if(registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(registerForm.get('username')?.errors?.['required']) {
+                    <p>Username is required</p>
+                  }
+                  @if(registerForm.get('username')?.errors?.['minlength']) {
+                    <p>Username must be at least 3 characters</p>
+                  }
+                  @if(registerForm.get('username')?.errors?.['maxlength']) {
+                    <p>Username cannot exceed 40 characters</p>
+                  }
+                </div>
+              }
+
+              <!-- Backend validation errors -->
+              @if(apiErrors.length != 0) {
+                @for(err of apiErrors ; track $index) {
+                  @if(err.field === "username"){
+                      <div class="alert alert-danger mt-2 p-2 rounded">
+                        <p>{{err.msg}}</p>
+                    </div>
+                    }
+                  }
+              }
+
+              <!-- Email -->
+              <div class="input-group mb-3 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-envelope-fill text-success"></i>
+                </span>
+                <input type="email" formControlName="email" class="form-control border-start-0 modern-input"
+                        placeholder="Email">
+              </div>
+              @if(registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(registerForm.get('email')?.errors?.['required']) {
+                    <p>Email is required</p>
+                  }
+                  @if(registerForm.get('email')?.errors?.['email']) {
+                    <p>Please enter a valid email address</p>
+                  }
+                </div>
+              }
+
+              <!-- Email backend error -->
+              @if(apiErrors.length != 0) {
+                @for(err of apiErrors ; track $index) {
+                  @if(err.field === "email"){
+                      <div class="alert alert-danger mt-2 p-2 rounded">
+                        <p>{{err.msg}}</p>
+                    </div>
+                    }
+                  }
+              }
+
+              <!-- Password -->
+              <div class="input-group mb-3 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-lock-fill text-danger"></i>
+                </span>
+                <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control border-start-0 modern-input"
+                        placeholder="Password">
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()">
+                  <i [class]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+                </button>
+              </div>
+              @if(registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(registerForm.get('password')?.errors?.['required']) {
+                    <p>Password is required</p>
+                  }
+                  @if(registerForm.get('password')?.errors?.['minlength']) {
+                    <p>Password must be at least 8 characters</p>
+                  }
+                  @if(registerForm.get('password')?.errors?.['pattern']) {
+                    <p>Password must contain at least 2 lowercase, 2 uppercase, 2 digits and 1 special character</p>
+                  }
+                </div>
+              }
+
+              <!-- City & Street -->
+              <div formGroupName="address" class="row">
+                <!-- City -->
+                <div class="col-md-6 mb-3 modern-input-group">
+                  <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0">
+                      <i class="bi bi-geo-alt-fill text-warning"></i>
+                    </span>
+                    <input type="text" formControlName="city" class="form-control border-start-0 modern-input"
+                          placeholder="City">
+                  </div>
+                  @if(registerForm.get('address')?.get('city')?.touched && registerForm.get('address')?.get('city')?.invalid) {
+                    <div class="alert alert-danger mt-2 p-2 rounded">
+                      @if(registerForm.get('address')?.get('city')?.errors?.['required']) {
+                        <p>City is required</p>
+                      }
+                      @if(registerForm.get('address')?.get('city')?.errors?.['minlength']) {
+                        <p>City must be at least 2 characters</p>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Street -->
+                <div class="col-md-6 mb-3 modern-input-group">
+                  <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0">
+                      <i class="bi bi-signpost-fill text-info"></i>
+                    </span>
+                    <input type="text" formControlName="street" class="form-control border-start-0 modern-input"
+                          placeholder="Street">
+                  </div>
+                  @if(registerForm.get('address')?.get('street')?.touched && registerForm.get('address')?.get('street')?.invalid) {
+                    <div class="alert alert-danger mt-2 p-2 rounded">
+                      @if(registerForm.get('address')?.get('street')?.errors?.['required']) {
+                        <p>Street is required</p>
+                      }
+                      @if(registerForm.get('address')?.get('street')?.errors?.['minlength']) {
+                        <p>Street must be at least 2 characters</p>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+
+
+              <!-- Phone -->
+              <div class="input-group mb-4 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-telephone-fill text-purple"></i>
+                </span>
+                <input type="tel" formControlName="phone" class="form-control border-start-0 modern-input"
+                        placeholder="Phone">
+              </div>
+              @if(registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(registerForm.get('phone')?.errors?.['required']) {
+                    <p>Phone is required</p>
+                  }
+                  @if(registerForm.get('phone')?.errors?.['pattern']) {
+                    <p>Phone must start with +2011, +2012, or +2015 and contain 11 digits total</p>
+                  }
+                </div>
+              } 
+
+              <!-- Submit Button -->
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn modern-btn fw-semibold py-3 rounded-pill shadow-lg"
+                        [disabled]="registerForm.invalid">
+                  <i class="bi bi-person-plus-fill me-2"></i> Register
+                </button>
+              </div>
+
+              <!-- Already have an account -->
+              <p class="text-center text-muted mb-0">
+                Already have an account? 
+                <a routerLink="/login" style="color: #667eea; text-decoration: none; font-weight: 500;">Login</a>
+              </p>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

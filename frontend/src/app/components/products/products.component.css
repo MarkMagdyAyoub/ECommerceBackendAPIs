@@ -1,0 +1,21 @@
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.card-body p {
+  font-size: 0.95rem;
+}
+
+.btn {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+}

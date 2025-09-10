@@ -1,0 +1,96 @@
+<section id="login" class="py-5">
+
+  <div class="container position-relative">
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-lg p-5 rounded-4 login-card position-relative overflow-hidden"
+              style="background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2);">
+
+          <!-- Gradient overlay for modern glass effect -->
+          <div class="position-absolute top-0 start-0 w-100 h-100 rounded-4"
+                style="background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05)); pointer-events: none;"></div>
+
+          <div class="position-relative">
+            <h2 class="text-center fw-bold mb-3" style="color: #2d3436;">Welcome Back</h2>
+            <p class="text-center text-muted mb-4">Login to your Quick Cart account</p>
+          
+          @if(emailConfirmationMessage){
+            <div class="alert alert-info mt-2 p-2 rounded">
+              {{ emailConfirmationMessage }}
+            </div>
+          }
+
+          @if(apiErrors.length != 0) {
+            @for(err of apiErrors ; track $index) {
+              @if(err.field === "confirm" || err.field === "credentials" || err.field === "unexpected"){
+                  <div class="alert alert-danger mt-2 p-2 rounded">
+                    <p>{{err.msg}}</p>
+                </div>
+                }
+              }
+          }
+
+            <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm(loginForm)">
+              <!-- Email -->
+              <div class="input-group mb-3 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-envelope-fill text-success"></i>
+                </span>
+                <input type="email" formControlName="email" id="email" name="email" class="form-control border-start-0 modern-input"
+                        placeholder="Email">
+              </div>
+              @if(loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(loginForm.get('email')?.errors?.['required']) {
+                    <p>Email is required</p>
+                  }
+                  @if(loginForm.get('email')?.errors?.['email']) {
+                    <p>Please enter a valid email address</p>
+                  }
+                </div>
+              }
+
+
+
+              <!-- Password -->
+              <div class="input-group mb-3 modern-input-group">
+                <span class="input-group-text bg-transparent border-end-0">
+                  <i class="bi bi-lock-fill text-danger"></i>
+                </span>
+                <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control border-start-0 modern-input"
+                        placeholder="Password">
+                <button type="button" class="btn btn-outline-secondary" (click)="togglePassword()">
+                  <i [class]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
+                </button>
+              </div>
+              @if(loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+                <div class="alert alert-danger mt-2 p-2 rounded">
+                  @if(loginForm.get('password')?.errors?.['required']) {
+                    <p>Password is required</p>
+                  }
+                  @if(loginForm.get('password')?.errors?.['minlength']) {
+                    <p>Password must be at least 8 characters</p>
+                  }
+                  @if(loginForm.get('password')?.errors?.['pattern']) {
+                    <p>Password must contain at least 2 lowercase, 2 uppercase, 2 digits and 1 special character</p>
+                  }
+                </div>
+              }
+
+              <!-- Button -->
+              <div class="d-grid mb-3">
+                <button [disabled]="loginForm.invalid" type="submit" class="btn modern-btn fw-semibold py-3 rounded-pill shadow-lg ">
+                  <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                </button>
+              </div>
+
+              <p class="text-center text-muted">
+                Don't have an account? <a routerLink="/register" style="color: #667eea; text-decoration: none;">Sign Up</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

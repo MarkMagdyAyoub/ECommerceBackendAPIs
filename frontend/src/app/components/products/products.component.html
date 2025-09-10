@@ -1,0 +1,79 @@
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="errors.length" class="alert alert-warning">
+  <ul>
+    @for(err of errors; track $index){
+      <li>{{err}}</li>
+    }
+  </ul>
+</div>
+
+
+@if(products.length && !errorMessage && errors.length === 0){
+  <div class="row g-4">
+    @for (product of products; track product._id) {
+      <div class="col-md-4">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+    }
+  </div>
+}
+
+
+@if(products.length && totalPages > 1){
+  <nav aria-label="Page navigation" class="my-5">
+    <ul class="pagination justify-content-center gap-2 flex-wrap">
+      
+      <!-- Previous Button -->
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link fw-semibold px-4 py-3 rounded-pill border-0 d-flex align-items-center gap-2" 
+           href="#" 
+           (click)="prevPage($event)"
+           style="background: rgba(102, 126, 234, 0.1); color: #667eea; transition: all 0.3s ease; backdrop-filter: blur(10px);"
+           [style.opacity]="currentPage === 1 ? '0.5' : '1'"
+           [style.cursor]="currentPage === 1 ? 'not-allowed' : 'pointer'"
+           onmouseover="if(this.style.cursor !== 'not-allowed') { this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.3)'; }"
+           onmouseout="if(this.style.cursor !== 'not-allowed') { this.style.background='rgba(102, 126, 234, 0.1)'; this.style.color='#667eea'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; }">
+          <i class="bi bi-chevron-left"></i>
+          <span>Previous</span>
+        </a>
+      </li>
+
+      <!-- Page Numbers -->
+      @for (page of totalPagesArray; track $index) {
+        <li class="page-item" [class.active]="currentPage === page">
+          <a class="page-link fw-bold rounded-circle border-0 d-flex align-items-center justify-content-center" 
+             href="#" 
+             (click)="goToPage(page)"
+             style="width: 50px; height: 50px; transition: all 0.3s ease; backdrop-filter: blur(10px);"
+             [style.background]="currentPage === page ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'rgba(102, 126, 234, 0.1)'"
+             [style.color]="currentPage === page ? 'white' : '#667eea'"
+             [style.box-shadow]="currentPage === page ? '0 8px 20px rgba(102, 126, 234, 0.4)' : 'none'"
+             [style.transform]="currentPage === page ? 'scale(1.1)' : 'scale(1)'"
+             onmouseover="if(this.style.background !== 'linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%)') { this.style.background='rgba(102, 126, 234, 0.2)'; this.style.transform='scale(1.05) translateY(-2px)'; }"
+             onmouseout="if(this.style.background !== 'linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%)') { this.style.background='rgba(102, 126, 234, 0.1)'; this.style.transform='scale(1) translateY(0)'; }">
+            {{ page }}
+          </a>
+        </li>
+      }
+
+      <!-- Next Button -->
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link fw-semibold px-4 py-3 rounded-pill border-0 d-flex align-items-center gap-2" 
+           href="#" 
+           (click)="nextPage($event)"
+           style="background: rgba(102, 126, 234, 0.1); color: #667eea; transition: all 0.3s ease; backdrop-filter: blur(10px);"
+           [style.opacity]="currentPage === totalPages ? '0.5' : '1'"
+           [style.cursor]="currentPage === totalPages ? 'not-allowed' : 'pointer'"
+           onmouseover="if(this.style.cursor !== 'not-allowed') { this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.style.color='white'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.3)'; }"
+           onmouseout="if(this.style.cursor !== 'not-allowed') { this.style.background='rgba(102, 126, 234, 0.1)'; this.style.color='#667eea'; this.style.transform='translateY(0)'; this.style.boxShadow='none'; }">
+          <span>Next</span>
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+}
